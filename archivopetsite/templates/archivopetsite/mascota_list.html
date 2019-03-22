@@ -1,0 +1,16 @@
+{% extends 'archivopetsite/base.html' %}
+
+{% block content %}
+
+    {% for mascota in mascotas %}
+        <div class="mascota">
+            <div class="date">
+                Fecha de nacimiento: {{ mascota.fecha_nacimiento_mascota }}
+            </div>
+            <h3><a href="{% url 'mascota_detail' pk=mascota.pk %}">Nombre: {{ mascota.mascota_nombre }}</a></h3>
+            <p><strong>Tipo:</strong> {{ mascota.mascota_tipo|linebreaksbr }}</p>
+            <p><strong>Raza:</strong> {{ mascota.mascota_raza|linebreaksbr }}</p>
+            <p><strong>Sexo:</strong> {{ mascota.get_mascota_sexo_display|linebreaksbr }}</p>
+        </div>
+    {% endfor %}
+{% endblock %}

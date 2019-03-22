@@ -1,0 +1,112 @@
+from django.shortcuts import render, get_object_or_404
+from django.utils import timezone
+from .models import Mascota, Identificacion, Propietario
+from .forms import MascotaForm, PropietarioForm
+from django.contrib.auth import login, authenticate
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.forms.models import inlineformset_factory
+
+
+from .forms import SignUpForm
+
+
+@login_required
+def home(request):
+    return render(request, 'home.html')
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            user.refresh_from_db()  # load the profile instance created by the signal
+            user.profile.birth_date = form.cleaned_data.get('fecha_nacimiento')
+            user.is_staff = False
+            user.is_superuser = False
+            user.es_veterinario = True
+            user.save()
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=user.username, password=raw_password)
+            login(request, user)
+            return redirect('mascota_new')
+    else:
+        form = SignUpForm()
+    return render(request, 'registration/signup.html', {'form': form})
+
+@login_required
+def mascota_list(request):
+    mascotas = Mascota.objects.filter(veterinario=request.user).order_by('fecha_nacimiento_mascota')
+    return render(request, 'archivopetsite/mascota_list.html', {'mascotas': mascotas})
+
+@login_required
+def mascota_detail(request, pk):
+    mascota = get_object_or_404(Mascota, pk=pk)
+    return render(request, 'archivopetsite/mascota_detail.html', {'mascota': mascota})
+
+@login_required
+def mascota_new(request):
+
+    #IdentificacionesFormSet = inlineformset_factory(Mascota, Identificacion, fields=['identificacion_codigo'], widgets={
+    #'identificacion_codigo': Textarea(attrs={'cols': 80, 'rows': 20})}, form=MascotaForm, extra=1, can_delete=False)
+    IdentificacionesFormSet = inlineformset_factory(Mascota, Identificacion, fields=('identificacion_codigo','identificacion_tipo', 'identificacion_ubicacion',), form=MascotaForm, extra=2, max_num=2, can_delete=False)
+    #PropietarioFormSet = inlineformset_factory(Propietario, Mascota, form=MascotaForm, extra=0, max_num=1, can_delete=False)
+    mascota = Mascota()
+    propietario = Propietario()
+
+    if request.method == "POST":
+        form = MascotaForm(request.POST, instance=mascota)
+        formpropietario = PropietarioForm(request.POST, instance=propietario)
+        identificacionesformset = IdentificacionesFormSet(request.POST, instance=mascota)
+        #propietarioformset = PropietarioFormSet(request.POST, instance=mascota)
+        if form.is_valid() and identificacionesformset.is_valid() and formpropietario.is_valid():
+            mascota = form.save(commit=False)
+            propietario = formpropietario.save()
+
+            mascota.veterinario = request.user
+            mascota.propietario = propietario
+
+            mascota.save()
+            #nuevas_identificaciones = identificacionesformset.save(commit=False)
+            #for identificacion in nuevas_identificaciones:
+            #    new_id = Identificacion.objects.get_or_create( identificacion_codigo='identificacion')
+            #    identificacion.mascota = mascota
+            #    identificacion.save()
+            identificacionesformset.save()
+            #propietarioformset.save()
+            return redirect('mascota_detail', pk=mascota.pk)
+    else:
+        form = MascotaForm(instance=mascota)
+        formpropietario = PropietarioForm(instance=propietario)
+        identificacionesformset = IdentificacionesFormSet(instance=mascota)
+        #propietarioformset = PropietarioFormSet(instance=mascota)
+    return render(request, 'archivopetsite/mascota_edit.html', {
+        'form': form,
+        'formpropietario': formpropietario,
+        'identificacionesformset': identificacionesformset,
+    })
+
+@login_required
+def mascota_edit(request, pk):
+    mascota = get_object_or_404(Mascota, pk=pk)
+    IdentificacionesFormSet = inlineformset_factory(Mascota, Identificacion, fields=('identificacion_codigo','identificacion_tipo', 'identificacion_ubicacion',), form=MascotaForm, extra=1, max_num=2, can_delete=False)
+    propietario = get_object_or_404(Propietario, pk=mascota.propietario.id)
+    if request.method == "POST":
+        form = MascotaForm(request.POST, instance=mascota)
+        identificacionesformset = IdentificacionesFormSet(request.POST, instance=mascota)
+        formpropietario = PropietarioForm(request.POST, instance=propietario)
+        if form.is_valid() and identificacionesformset.is_valid() and formpropietario.is_valid():
+            mascota = form.save(commit=False)
+            mascota.save()
+            identificacionesformset.save()
+            return redirect('mascota_detail', pk=mascota.pk)
+    else:
+        form = MascotaForm(instance=mascota)
+        identificacionesformset = IdentificacionesFormSet(instance=mascota)
+        formpropietario = PropietarioForm(instance=propietario)
+    return render(request, 'archivopetsite/mascota_edit.html', {
+        'form': form,
+        'identificacionesformset': identificacionesformset,
+        'formpropietario': formpropietario,
+    })

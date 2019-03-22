@@ -1,0 +1,6 @@
+<h1>{{ mascota.mascota_nombre }}</h1>
+<ul>
+{% for identificacion in mascota.identificacion_set.all %}
+    <li>{{ identificacion.identificacion_codigo }}</li>
+{% endfor %}
+</ul>

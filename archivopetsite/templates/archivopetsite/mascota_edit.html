@@ -1,0 +1,136 @@
+{% extends 'archivopetsite/base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+<h2>Datos de la Mascota</h2>
+
+
+<form method="post">
+  {% csrf_token %}
+
+
+  {% for hidden_field in form.hidden_fields %}
+  {{ hidden_field }}
+  {% endfor %}
+
+{% if form.non_field_errors %}
+  <div class="alert alert-danger" role="alert">
+    {% for error in form.non_field_errors %}
+      {{ error }}
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% for field in form.visible_fields %}
+  <div class="form-group">
+    {{ field.label_tag }}
+
+    {% if form.is_bound %}
+      {% if field.errors %}
+        {% render_field field class="form-control is-invalid" %}
+        {% for error in field.errors %}
+          <div class="invalid-feedback">
+            {{ error }}
+          </div>
+        {% endfor %}
+      {% else %}
+        {% render_field field class="form-control is-valid" %}
+      {% endif %}
+    {% else %}
+      {% render_field field class="form-control" %}
+    {% endif %}
+
+    {% if field.help_text %}
+      <small class="form-text text-muted">{{ field.help_text }}</small>
+    {% endif %}
+  </div>
+{% endfor %}
+
+<script>
+  $(function () {
+    $("#id_fecha_nacimiento_mascota").datetimepicker({
+      format: 'd/m/Y',
+    });
+  });
+</script>
+
+
+<h2>Datos del Propietario</h2>
+
+{% for hidden_field in formpropietario.hidden_fields %}
+{{ hidden_field }}
+{% endfor %}
+
+{% if formpropietario.non_field_errors %}
+<div class="alert alert-danger" role="alert">
+  {% for error in formpropietario.non_field_errors %}
+    {{ error }}
+  {% endfor %}
+</div>
+{% endif %}
+
+{% for field in formpropietario.visible_fields %}
+<div class="form-group">
+  {{ field.label_tag }}
+
+  {% if formpropietario.is_bound %}
+    {% if field.errors %}
+      {% render_field field class="form-control is-invalid" %}
+      {% for error in field.errors %}
+        <div class="invalid-feedback">
+          {{ error }}
+        </div>
+      {% endfor %}
+    {% else %}
+      {% render_field field class="form-control is-valid" %}
+    {% endif %}
+  {% else %}
+    {% render_field field class="form-control" %}
+  {% endif %}
+
+  {% if field.help_text %}
+    <small class="form-text text-muted">{{ field.help_text }}</small>
+  {% endif %}
+</div>
+{% endfor %}
+
+<fieldset class="module aligned ">
+<h2>Identificaciones</h2>
+<table class="table">
+     <tr>
+     {% for field in identificacionesformset.forms.0 %}
+          {% if not field.is_hidden %}
+               <th scope="col">{{ field.label }}</th>
+          {% endif %}
+     {% endfor %}
+     </tr>
+     {% for f in identificacionesformset.management_form %}
+          {{ f }}
+     {% endfor %}
+     {% for f in identificacionesformset.forms %}
+          <tr>
+          {% for field in f %}
+               {% if not field.is_hidden %}
+                    <td>
+                    {{ field.errors }}
+                    {{ field }}
+                    </td>
+               {% else %}
+                    <td valign="bottom">{{ field }}</
+               {% endif %}
+          {% endfor %}
+          {% if field.help_text %}
+            <small class="form-text text-muted">{{ field.help_text }}</small>
+          {% endif %}
+          </tr>
+     {% endfor %}
+</table>
+
+        <button type="submit" class="btn btn-primary">Guardar</button>
+</form>
+
+
+
+
+{% endblock %}

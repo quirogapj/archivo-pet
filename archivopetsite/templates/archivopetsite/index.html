@@ -1,0 +1,9 @@
+{% if latest_mascota_list %}
+    <ul>
+    {% for mascota in latest_mascota_list %}
+        <li><a href="{% url 'archivopetsite:detail' mascota.id %}">{{ mascota.mascota_nombre }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No mascotas are available.</p>
+{% endif %}
