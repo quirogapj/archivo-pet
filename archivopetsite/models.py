@@ -5,16 +5,19 @@ from django.dispatch import receiver
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    bio = models.TextField(max_length=500, blank=True)
-    location = models.CharField(max_length=30, blank=True)
-    fecha_nacimiento = models.DateField(null=True)
-    dni = models.CharField(max_length=30, verbose_name="DNI")
+    #bio = models.TextField(max_length=500, blank=True)
+    #fecha_nacimiento = models.DateField(null=True)
+    dni = models.CharField(max_length=30, verbose_name="DNI", null=True)
     es_veterinario = models.BooleanField('estado veterinario', default=False, null=True)
-    matricula = models.CharField(max_length=30)
-    direccion_veterinaria = models.CharField(max_length=30)
-    nombre_veterinaria = models.CharField(max_length=30)
-    telefono_veterinaria = models.CharField(max_length=15)
-    telefono_celular = models.CharField(max_length=15, blank=True)
+    tiene_lectora = models.BooleanField('tiene lectora', default=False, null=True)
+    #matricula = models.CharField(max_length=30)
+    calle_veterinaria = models.CharField(max_length=30, null=True)
+    numero_calle_veterinaria = models.PositiveIntegerField(null=True)
+    localidad_veterinaria = models.CharField(max_length=30, null=True)
+    provincia_veterinaria = models.CharField(max_length=30, null=True)
+    nombre_veterinaria = models.CharField(max_length=30, null=True)
+    telefono_veterinaria = models.CharField(max_length=15, null=True)
+    telefono_celular = models.CharField(max_length=15, blank=True, null=True)
 
 @receiver(post_save, sender=User)
 def update_user_profile(sender, instance, created, **kwargs):
@@ -26,6 +29,8 @@ class Propietario(models.Model):
     nombre = models.CharField(max_length=30)
     apellido = models.CharField(max_length=30)
     dni = models.CharField(max_length=30)
+    telefono = models.CharField(max_length=15)
+    email = models.EmailField(max_length=70)
     def __str__(self):
         return self.dni + " - " + self.nombre + " " + self.apellido
 
@@ -62,6 +67,11 @@ class Mascota(models.Model):
     )
     fecha_nacimiento_mascota = models.DateField('fecha de nacimiento')
     mascota_color = models.CharField("Color", max_length=20)
+    fecha_ultima_vacunacion = models.DateField('fecha de ultima vacunacion')
+    #observaciones = models.TextField(null=True, blank=True)
+    senias = models.TextField('Señas',null=True, blank=True)
+    vacunas = models.TextField(null=True, blank=True)
+    tratamientos = models.TextField(null=True, blank=True)
     def __str__(self):
         return self.mascota_nombre
 

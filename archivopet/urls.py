@@ -29,7 +29,7 @@ urlpatterns = [
 
 #Add Django site authentication urls (for login, logout, password management)
 urlpatterns += [
-    url(r'^$', core_views.home, name='home'),
+    #url(r'^$', core_views.home, name='home'),
     url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^signup/$', core_views.signup, name='signup'),
 ]

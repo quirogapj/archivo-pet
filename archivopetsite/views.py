@@ -1,16 +1,36 @@
+from django.core.mail import send_mail, BadHeaderError
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from .models import Mascota, Identificacion, Propietario
-from .forms import MascotaForm, PropietarioForm
+from .forms import MascotaForm, PropietarioForm, ContactForm
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.forms.models import inlineformset_factory
+from django.http import HttpResponse
 
 
 from .forms import SignUpForm
 
+
+def index(request):
+    """
+    Función vista para la página inicio del sitio.
+    """
+    # Genera contadores de algunos de los objetos principales
+    #num_books=Book.objects.all().count()
+    #num_instances=BookInstance.objects.all().count()
+    # Libros disponibles (status = 'a')
+    #num_instances_available=BookInstance.objects.filter(status__exact='a').count()
+    #num_authors=Author.objects.count()  # El 'all()' esta implícito por defecto.
+
+    # Renderiza la plantilla HTML index.html con los datos en la variable contexto
+    return render(
+        request,
+        'index.html'#,
+        #context={'num_books':num_books,'num_instances':num_instances,'num_instances_available':num_instances_available,'num_authors':num_authors},
+    )
 
 @login_required
 def home(request):
@@ -22,15 +42,24 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             user.refresh_from_db()  # load the profile instance created by the signal
-            user.profile.birth_date = form.cleaned_data.get('fecha_nacimiento')
+            #user.profile.birth_date = form.cleaned_data.get('fecha_nacimiento')
             user.is_staff = False
             user.is_superuser = False
-            user.es_veterinario = True
+            user.profile.es_veterinario = True
+            user.profile.tiene_lectora = form.cleaned_data.get('tiene_lectora')
+            user.profile.dni = form.cleaned_data.get('dni')
+            user.profile.calle_veterinaria = form.cleaned_data.get('calle_veterinaria')
+            user.profile.numero_calle_veterinaria = form.cleaned_data.get('numero_calle_veterinaria')
+            user.profile.localidad_veterinaria = form.cleaned_data.get('localidad_veterinaria')
+            user.profile.provincia_veterinaria = form.cleaned_data.get('provincia_veterinaria')
+            user.profile.nombre_veterinaria = form.cleaned_data.get('nombre_veterinaria')
+            user.profile.telefono_veterinaria = form.cleaned_data.get('telefono_veterinaria')
+            user.profile.telefono_celular = form.cleaned_data.get('telefono_celular')
             user.save()
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=user.username, password=raw_password)
             login(request, user)
-            return redirect('mascota_new')
+            return redirect('index')
     else:
         form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form})
@@ -110,3 +139,49 @@ def mascota_edit(request, pk):
         'identificacionesformset': identificacionesformset,
         'formpropietario': formpropietario,
     })
+
+def search_form(request):
+    return render(request, 'archivopetsite/buscar_mascota.html')
+
+def search(request):
+    error = False
+    if 'q' in request.GET and request.GET['q']:
+        q = request.GET['q']
+        identificacion = Identificacion.objects.filter(identificacion_codigo__icontains=q)
+        if identificacion:
+            id = Identificacion.objects.get(identificacion_codigo__icontains=q)
+            name = request.GET['nombre']
+            subject = "Archivo PET - Reporte de mascota ENCONTRADA"
+            tel = request.GET['telefono']
+            from_email = request.GET['email']
+            to_email = id.mascota.propietario.email
+            message = "\nNombre: " + name +"\nTelefono: " + tel + "\nEmail: " + from_email + "\nMensaje: " + request.GET['mensaje']
+            try:
+                send_mail(subject, message, from_email, [to_email])
+            except BadHeaderError:
+                return HttpResponse('Invalid header found.')
+        return render(request, 'archivopetsite/busqueda_resultados.html',
+                      {'identificacion': identificacion, 'query': q})
+    else:
+        error = True
+        return render(request, 'archivopetsite/buscar_mascota.html', {'error': error})
+
+def emailView(request):
+    if request.method == 'GET':
+        form = ContactForm()
+    else:
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data['subject']
+            from_email = form.cleaned_data['from_email']
+            message = form.cleaned_data['message']
+            try:
+                send_mail(subject, message, from_email, ['archivopet@gmail.com'])
+            except BadHeaderError:
+                return HttpResponse('Invalid header found.')
+            return redirect('success')
+    return render(request, "archivopetsite/email.html", {'form': form})
+
+def successView(request):
+    #return HttpResponse('Success! Thank you for your message.')
+    return render(request, 'archivopetsite/success.html')

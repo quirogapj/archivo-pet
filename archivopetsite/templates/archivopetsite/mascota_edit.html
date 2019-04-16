@@ -1,4 +1,4 @@
-{% extends 'archivopetsite/base.html' %}
+{% extends 'archivopetsite/base_content.html' %}
 {% load widget_tweaks %}
 
 {% block content %}
@@ -50,6 +50,13 @@
 <script>
   $(function () {
     $("#id_fecha_nacimiento_mascota").datetimepicker({
+      format: 'd/m/Y',
+    });
+  });
+</script>
+<script>
+  $(function () {
+    $("#id_fecha_ultima_vacunacion").datetimepicker({
       format: 'd/m/Y',
     });
   });

@@ -1,0 +1,27 @@
+{% extends 'archivopetsite/base_content.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+<h2>Búsqueda de Mascota</h2>
+
+
+<p>Se buscó la identificacion: <strong>{{ query }}</strong></p>
+
+        {% if identificacion %}
+          <!--  <p>Found {{ books|length }} book{{ books|pluralize }}.</p> -->
+            <h5>Se encontrá la siguiente mascota</h5>
+            <ul>
+                {% for identificacion in identificacion %}
+                <li><strong>Nombre de la mascota:</strong> {{ identificacion.mascota }}</li>
+                <li><strong>Email propietario:</strong> {{ identificacion.mascota.propietario.email }}</li>
+                <li><strong>Teléfono propietario:</strong> {{ identificacion.mascota.propietario.telefono }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Ninguna mascota registrada con esa identificación. Por favor, <a href="/buscar_mascota">vuelva a intentarlo.</a></p>
+        {% endif %}
+
+
+
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'archivopetsite/base_content.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+<h2>Búsqueda de Mascota</h2>
+
+{% if error %}
+        <p style="color: red;">Por favor ingrese un código de identificacion.</p>
+{% endif %}
+<form  action="/buscar/" method="get" style="margin-top: 20px;">
+
+  <div class="form-group row">
+  <label for="example-search-input" class="col-2 col-form-label">Código</label>
+  <div class="col-10">
+    <input class="form-control" type="search" placeholder="Figura en la placa de la mascota. Sin guiones, ni espacios." name="q">
+  </div>
+</div>
+
+
+  <!-- <input class="form-control mr-sm-2" type="search" placeholder="Código identificación" name="q">-->
+  <div class="form-group row">
+    <label for="example-text-input" class="col-2 col-form-label">Nombre</label>
+    <div class="col-10">
+      <input class="form-control" type="text" required="true" placeholder="Ingrese nombre completo" name="nombre">
+    </div>
+  </div>
+
+
+  <div class="form-group row">
+  <label for="example-email-input" class="col-2 col-form-label">Email</label>
+  <div class="col-10">
+    <input class="form-control" type="email" placeholder="Correo electrónico" required="true" name="email">
+  </div>
+</div>
+
+  <div class="form-group row">
+  <label for="example-tel-input" class="col-2 col-form-label">Teléfono</label>
+  <div class="col-10">
+    <input class="form-control" type="tel" placeholder="Es para un contacto rápido. Con código de área." id="example-tel-input" required="true" name="telefono">
+  </div>
+</div>
+
+
+<div class="form-group row">
+<label for="exampleFormControlTextarea1-tel-input" class="col-2 col-form-label">Mensaje</label>
+<div class="col-10">
+  <textarea class="form-control" rows="3" placeholder="Ingrese descripción de dónde encontró la mascota y otros detalles pertinentes." name="mensaje"></textarea>
+</div>
+</div>
+
+
+  <input  class="btn btn-outline-success my-2 my-sm-0"  type="submit" value="Buscar">
+
+</form>
+
+{% endblock %}

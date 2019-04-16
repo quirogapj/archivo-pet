@@ -1,19 +1,18 @@
-{% extends 'archivopetsite/base.html' %}
+{% extends 'archivopetsite/base_content.html' %}
 
 {% block content %}
     <div class="mascota">
-        {% if mascota.fecha_nacimiento %}
+        {% if mascota.fecha_nacimiento_mascota %}
             <div class="date">
-                {{ mascota.fecha_nacimiento }}
+                {{ mascota.fecha_nacimiento_mascota }}
             </div>
         {% endif %}
-          {% if user.is_authenticated %}
-            <a class="btn btn-default" href="{% url 'mascota_edit' pk=mascota.pk %}"><span class="fas fa-edit"></span></a>
-          {% endif %}
-        <h2>{{ mascota.mascota_nombre }}</h2>
+        <div><h2>{{ mascota.mascota_nombre }} {% if user.is_authenticated %}
+          <a class="btn btn-outline-secondary btn-sm" href="{% url 'mascota_edit' pk=mascota.pk %}">Modificar</a>
+        {% endif %}</h2></div>
         <p><strong>Tipo:</strong> {{ mascota.mascota_tipo|linebreaksbr }}</p>
         <p><strong>Raza:</strong> {{ mascota.mascota_raza|linebreaksbr }}</p>
         <p><strong>Sexo:</strong> {{ mascota.get_mascota_sexo_display|linebreaksbr }}</p>
-        
+
     </div>
 {% endblock %}
