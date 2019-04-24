@@ -43,21 +43,14 @@
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <a class="dropdown-item" href="{% url 'mascota_new' %}">Agregar</a>
+              </div>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <a class="dropdown-item" href="{% url 'mascota_list' %}">Lista</a>
               </div>
-            </li>
-            <li class="nav-item {% if url_name == 'email' %} active {% endif %}">
-              <a class="nav-link" href="/contacto">Contacto</a>
             </li>
             {% else %}
             <li class="nav-item {% if url_name == 'signup' %} active {% endif %}">
               <a class="nav-link" href="/signup">Registro de Veterinarios</a>
-            </li>
-            <li class="nav-item {% if url_name == 'email' %} active {% endif %}">
-              <a class="nav-link" href="/contacto">Contacto</a>
-            </li>
-            <li class="nav-item {% if url_name == 'buscar_mascota' %} active {% endif %}">
-              <a class="btn btn-success my-2 my-sm-0" href="/buscar_mascota">Encontré una mascota </a>
             </li>
           {% endif %}
         </ul>
@@ -84,8 +77,6 @@
 
 {% block content %}
 {% endblock %}
-
-<hr class="featurette-divider">
 
 <!-- FOOTER -->
      <footer class="container">
