@@ -57,19 +57,19 @@ class PropietarioForm(forms.ModelForm):
 
 
 class SignUpForm(UserCreationForm):
-    dni = forms.CharField(max_length=30, label='DNI')
+    dni = forms.CharField(max_length=30, help_text='Requerido.', label='DNI')
     #es_veterinario = models.BooleanField('estado veterinario', default=False, null=True)
     tiene_lectora = forms.BooleanField(label='Tilde si dispone de lectora de microchip', required=False   )
-    calle_veterinaria = forms.CharField(max_length=30)
-    numero_calle_veterinaria = forms.IntegerField()
-    localidad_veterinaria = forms.CharField(max_length=30)
-    provincia_veterinaria = forms.CharField(max_length=30)
-    nombre_veterinaria = forms.CharField(max_length=30)
-    telefono_veterinaria = forms.CharField(max_length=30)
+    calle_veterinaria = forms.CharField(max_length=30, help_text='Requerido.')
+    numero_calle_veterinaria = forms.IntegerField(help_text='Requerido.')
+    localidad_veterinaria = forms.CharField(max_length=30, help_text='Requerido.')
+    provincia_veterinaria = forms.CharField(max_length=30, help_text='Requerido.')
+    nombre_veterinaria = forms.CharField(max_length=30, help_text='Requerido.')
+    telefono_veterinaria = forms.CharField(max_length=30, help_text='Requerido.')
     telefono_celular = forms.CharField(max_length=30, required=False, help_text='Opcional.')
     email = forms.EmailField(max_length=254, help_text='Requerido. Ingrese una dirección válida.', label='Email veterinaria')
-    first_name = forms.CharField(max_length=30, label='Nombre:')
-    last_name = forms.CharField(max_length=30, label='Apellidos:')
+    first_name = forms.CharField(max_length=30, label='Nombre:', help_text='Requerido.')
+    last_name = forms.CharField(max_length=30, label='Apellidos:', help_text='Requerido.')
 
     class Meta:
         model = User
