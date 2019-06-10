@@ -63,6 +63,7 @@ class SignUpForm(UserCreationForm):
     calle_veterinaria = forms.CharField(max_length=30, help_text='Requerido.')
     numero_calle_veterinaria = forms.IntegerField(help_text='Requerido.')
     localidad_veterinaria = forms.CharField(max_length=30, help_text='Requerido.')
+    cp_veterinaria = forms.IntegerField(label='Código Postal:',help_text='Requerido.')
     provincia_veterinaria = forms.CharField(max_length=30, help_text='Requerido.')
     nombre_veterinaria = forms.CharField(max_length=30, help_text='Requerido.')
     telefono_veterinaria = forms.CharField(max_length=30, help_text='Requerido.')
@@ -84,6 +85,7 @@ class SignUpForm(UserCreationForm):
         'calle_veterinaria',
         'numero_calle_veterinaria',
         'localidad_veterinaria',
+        'cp_veterinaria',
         'provincia_veterinaria',
         'nombre_veterinaria',
         'telefono_veterinaria',

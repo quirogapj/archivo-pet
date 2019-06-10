@@ -14,6 +14,7 @@ class Profile(models.Model):
     calle_veterinaria = models.CharField(max_length=30, null=True)
     numero_calle_veterinaria = models.PositiveIntegerField(null=True)
     localidad_veterinaria = models.CharField(max_length=30, null=True)
+    cp_veterinaria = models.PositiveIntegerField(null=True)
     provincia_veterinaria = models.CharField(max_length=30, null=True)
     nombre_veterinaria = models.CharField(max_length=30, null=True)
     telefono_veterinaria = models.CharField(max_length=15, null=True)
