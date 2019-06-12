@@ -143,6 +143,9 @@ def mascota_edit(request, pk):
 def search_form(request):
     return render(request, 'archivopetsite/buscar_mascota.html')
 
+def preguntasFrecuentesView(request):
+    return render(request, 'archivopetsite/preguntas_frecuentes.html')
+
 def search(request):
     error = False
     if 'q' in request.GET and request.GET['q']:

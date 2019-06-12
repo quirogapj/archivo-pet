@@ -18,4 +18,5 @@ urlpatterns = [
     url(r'^buscar/$', views.search),
     path('contacto/', views.emailView, name='email'),
     path('success/', views.successView, name='success'),
+    path('preguntasfrecuentes/', views.preguntasFrecuentesView, name='preguntasfrecuentes'),
 ]

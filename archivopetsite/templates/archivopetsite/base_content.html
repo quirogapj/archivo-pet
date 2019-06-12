@@ -21,6 +21,8 @@
         <!-- Custom styles for this template -->
         <link href="{% static 'css/carousel.css' %}" rel="stylesheet">
 
+        <script src="https://cdn.rawgit.com/PascaleBeier/bootstrap-validate/v2.2.0/dist/bootstrap-validate.js"></script>
+
     </head>
     <body>
       <header>
@@ -51,6 +53,9 @@
                 <a class="dropdown-item" href="{% url 'mascota_list' %}">Lista</a>
               </div>
             </li>
+            <li class="nav-item {% if url_name == 'preguntasfrecuentes' %} active {% endif %}">
+              <a class="nav-link" href="/preguntasfrecuentes">Preguntas Frecuentes</a>
+            </li>
             <li class="nav-item {% if url_name == 'email' %} active {% endif %}">
               <a class="nav-link" href="/contacto">Contacto</a>
             </li>
@@ -58,6 +63,9 @@
             {% else %}
             <li class="nav-item {% if url_name == 'signup' %} active {% endif %}">
               <a class="nav-link" href="/signup">Registro de Veterinarios</a>
+            </li>
+            <li class="nav-item {% if url_name == 'preguntasfrecuentes' %} active {% endif %}">
+              <a class="nav-link" href="/preguntasfrecuentes">Preguntas Frecuentes</a>
             </li>
             <li class="nav-item {% if url_name == 'email' %} active {% endif %}">
               <a class="nav-link" href="/contacto">Contacto</a>
@@ -117,5 +125,8 @@
 
    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
    <script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.9.6/holder.min.js"></script>
+   <script>bootstrapValidate('#codigoPlaca', 'alphanum:Por favor, ingrese solo números y letras!')</script>
+   <script>bootstrapValidate('#id_identificacion_set-0-identificacion_codigo', 'alphanum:Por favor, ingrese solo números y letras!')</script>
+   <script>bootstrapValidate('#id_identificacion_set-1-identificacion_codigo', 'alphanum:Por favor, ingrese solo números y letras!')</script>
     </body>
 </html>

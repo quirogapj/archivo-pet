@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<h2>Búsqueda de Mascota</h2>
+<h2>Reportar mascota encontrada</h2>
 
 {% if error %}
         <p style="color: red;">Por favor ingrese un código de identificacion.</p>
@@ -13,7 +13,7 @@
   <div class="form-group row">
   <label for="example-search-input" class="col-2 col-form-label">Código</label>
   <div class="col-10">
-    <input class="form-control" type="search" placeholder="Figura en la placa de la mascota. Sin guiones, ni espacios." name="q">
+    <input id="codigoPlaca" class="form-control" type="search" placeholder="Figura en la placa de la mascota. Sin guiones, ni espacios." name="q">
   </div>
 </div>
 
@@ -22,7 +22,7 @@
   <div class="form-group row">
     <label for="example-text-input" class="col-2 col-form-label">Nombre</label>
     <div class="col-10">
-      <input class="form-control" type="text" required="true" placeholder="Ingrese nombre completo" name="nombre">
+      <input class="form-control" type="text" required="true" placeholder="Ingrese su nombre completo" name="nombre">
     </div>
   </div>
 
@@ -30,7 +30,7 @@
   <div class="form-group row">
   <label for="example-email-input" class="col-2 col-form-label">Email</label>
   <div class="col-10">
-    <input class="form-control" type="email" placeholder="Correo electrónico" required="true" name="email">
+    <input class="form-control" type="email" placeholder="Su correo electrónico" required="true" name="email">
   </div>
 </div>
 
