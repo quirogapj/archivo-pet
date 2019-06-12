@@ -95,7 +95,7 @@ class Identificacion(models.Model):
         null=True
     )
     identificacion_ubicacion = models.CharField('ubicacion', max_length=20, blank=True, null=True)
-    identificacion_codigo = models.CharField('codigo', max_length=10, unique=True, blank=True, null=True)
+    identificacion_codigo = models.CharField('codigo', max_length=16, unique=True, blank=True, null=True)
     fecha_implante = models.DateField('fecha implante', auto_now_add=True)
     def __str__(self):
         return self.identificacion_codigo
