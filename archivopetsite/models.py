@@ -21,10 +21,20 @@ class Profile(models.Model):
     telefono_celular = models.CharField(max_length=15, blank=True, null=True)
 
 @receiver(post_save, sender=User)
-def update_user_profile(sender, instance, created, **kwargs):
+def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+
+
+#@receiver(post_save, sender=User)
+#def update_user_profile(sender, instance, created, **kwargs):
+#    if created:
+#        Profile.objects.create(user=instance)
+#    instance.profile.save()
 
 class Propietario(models.Model):
     nombre = models.CharField(max_length=30)
@@ -37,7 +47,7 @@ class Propietario(models.Model):
 
 
 class Raza(models.Model):
-    raza_nombre = models.CharField(max_length=20)
+    raza_nombre = models.CharField(max_length=35)
     def __str__(self):
         return self.raza_nombre
 

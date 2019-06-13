@@ -95,3 +95,23 @@ class ContactForm(forms.Form):
     from_email = forms.EmailField(label='Email', required=True)
     subject = forms.CharField(label='Título', required=True)
     message = forms.CharField(label='Mensaje', widget=forms.Textarea, required=True)
+
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email')
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('dni',
+        'tiene_lectora',
+        'calle_veterinaria',
+        'numero_calle_veterinaria',
+        'localidad_veterinaria',
+        'cp_veterinaria',
+        'provincia_veterinaria',
+        'nombre_veterinaria',
+        'telefono_veterinaria',
+        'telefono_celular')

@@ -2,13 +2,17 @@ from django.core.mail import send_mail, BadHeaderError
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from .models import Mascota, Identificacion, Propietario
-from .forms import MascotaForm, PropietarioForm, ContactForm
+from .forms import MascotaForm, PropietarioForm, ContactForm, UserForm, ProfileForm
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.forms.models import inlineformset_factory
 from django.http import HttpResponse
+from django.db import transaction
+from django.contrib import messages
+from django.conf import settings
+from django.contrib import admin
 
 
 from .forms import SignUpForm
@@ -188,3 +192,26 @@ def emailView(request):
 def successView(request):
     #return HttpResponse('Success! Thank you for your message.')
     return render(request, 'archivopetsite/success.html')
+
+@login_required
+@transaction.atomic
+def update_profile(request):
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=request.user)
+        profile_form = ProfileForm(request.POST, instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            request.user.is_staff = False
+            request.user.is_superuser = False
+            user_form.save()
+            profile_form.save()
+            messages.success(request, ('Your profile was successfully updated!'))
+            return redirect('/modificarperfil')
+        else:
+            messages.error(request, ('Please correct the error below.'))
+    else:
+        user_form = UserForm(instance=request.user)
+        profile_form = ProfileForm(instance=request.user.profile)
+    return render(request, 'profiles/profile.html', {
+        'user_form': user_form,
+        'profile_form': profile_form
+    })

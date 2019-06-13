@@ -19,4 +19,5 @@ urlpatterns = [
     path('contacto/', views.emailView, name='email'),
     path('success/', views.successView, name='success'),
     path('preguntasfrecuentes/', views.preguntasFrecuentesView, name='preguntasfrecuentes'),
+    path('modificarperfil/', views.update_profile, name='modificarperfil'),
 ]
