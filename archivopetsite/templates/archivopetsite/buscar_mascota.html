@@ -6,14 +6,14 @@
 <h2>Reportar mascota encontrada</h2>
 
 {% if error %}
-        <p style="color: red;">Por favor ingrese un código de identificacion.</p>
+        <p style="color: red;">Por favor ingrese un código de identificacion válido (sin espacios, ni guiones).</p>
 {% endif %}
 <form  action="/buscar/" method="get" style="margin-top: 20px;">
 
   <div class="form-group row">
   <label for="example-search-input" class="col-2 col-form-label">Código</label>
   <div class="col-10">
-    <input id="codigoPlaca" class="form-control" type="search" placeholder="Figura en la placa de la mascota. Sin guiones, ni espacios." name="q">
+    <input id="codigoPlaca" class="form-control" type="search" placeholder="Figura en la placa de la mascota. Sin guiones, ni espacios." name="q" required="true" pattern="[a-zA-Z0-9]+">
   </div>
 </div>
 

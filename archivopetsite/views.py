@@ -152,8 +152,8 @@ def preguntasFrecuentesView(request):
 
 def search(request):
     error = False
-    if 'q' in request.GET and request.GET['q']:
-        q = request.GET['q']
+    if request.GET.get('q'):
+        q = request.GET.get('q')
         identificacion = Identificacion.objects.filter(identificacion_codigo__icontains=q)
         if identificacion:
             id = Identificacion.objects.get(identificacion_codigo__icontains=q)
