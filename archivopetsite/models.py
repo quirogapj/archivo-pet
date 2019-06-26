@@ -58,8 +58,8 @@ class Raza(models.Model):
 
 class Tipo_Mascota(models.Model):
     class Meta:
-        verbose_name_plural = "tipo de mascotas"
-        verbose_name = "tipo de mascota"
+        verbose_name_plural = "especie de mascotas"
+        verbose_name = "especie de mascota"
     tipo_mascota_nombre = models.CharField(max_length=20)
     def __str__(self):
         return self.tipo_mascota_nombre
@@ -69,7 +69,7 @@ class Mascota(models.Model):
     veterinario = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     propietario = models.ForeignKey(Propietario, on_delete=models.CASCADE)
     mascota_nombre = models.CharField('nombre', max_length=20)
-    mascota_tipo = models.ForeignKey('Tipo_Mascota', on_delete=models.CASCADE, verbose_name="Tipo")
+    mascota_tipo = models.ForeignKey('Tipo_Mascota', on_delete=models.CASCADE, verbose_name="Especie")
     mascota_raza = models.ForeignKey('Raza', on_delete=models.CASCADE, verbose_name="Raza")
     MACHO = "M"
     HEMBRA = "H"
