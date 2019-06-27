@@ -8,6 +8,10 @@
 {% if error %}
         <p style="color: red;">Por favor ingrese un código de identificacion válido (sin espacios, ni guiones).</p>
 {% endif %}
+
+<p>Utilice el siguiente formulario para reportar una mascota encontrada. Deberá ingresar <strong>el código que figura en la chapa de la mascota</strong> y algunos
+  datos personales para que podamos contactarlo. Gracias por demostrar preocupación por nuestras mascotas.</p>
+
 <form  action="/buscar/" method="get" style="margin-top: 20px;">
 
   <div class="form-group row">
@@ -22,7 +26,7 @@
   <div class="form-group row">
     <label for="example-text-input" class="col-2 col-form-label">Nombre</label>
     <div class="col-10">
-      <input class="form-control" type="text" required="true" placeholder="Ingrese su nombre completo" name="nombre">
+      <input class="form-control" type="text" required="true" placeholder="Ingresá nombre completo" name="nombre">
     </div>
   </div>
 
@@ -30,7 +34,7 @@
   <div class="form-group row">
   <label for="example-email-input" class="col-2 col-form-label">Email</label>
   <div class="col-10">
-    <input class="form-control" type="email" placeholder="Su correo electrónico" required="true" name="email">
+    <input class="form-control" type="email" placeholder="Correo electrónico" required="true" name="email">
   </div>
 </div>
 
@@ -45,7 +49,7 @@
 <div class="form-group row">
 <label for="exampleFormControlTextarea1-tel-input" class="col-2 col-form-label">Mensaje</label>
 <div class="col-10">
-  <textarea class="form-control" rows="3" placeholder="Ingrese descripción de dónde encontró la mascota y otros detalles pertinentes." name="mensaje"></textarea>
+  <textarea class="form-control" rows="3" placeholder="Ingresá descripción de dónde encontraste la mascota y otros detalles pertinentes." name="mensaje"></textarea>
 </div>
 </div>
 

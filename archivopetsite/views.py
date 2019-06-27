@@ -52,9 +52,11 @@ def signup(request):
             user.profile.es_veterinario = True
             user.profile.tiene_lectora = form.cleaned_data.get('tiene_lectora')
             user.profile.dni = form.cleaned_data.get('dni')
+            user.profile.establecimiento_tipo = form.cleaned_data.get('establecimiento_tipo')
             user.profile.calle_veterinaria = form.cleaned_data.get('calle_veterinaria')
             user.profile.numero_calle_veterinaria = form.cleaned_data.get('numero_calle_veterinaria')
             user.profile.localidad_veterinaria = form.cleaned_data.get('localidad_veterinaria')
+            user.profile.cp_veterinaria = form.cleaned_data.get('cp_veterinaria')
             user.profile.provincia_veterinaria = form.cleaned_data.get('provincia_veterinaria')
             user.profile.nombre_veterinaria = form.cleaned_data.get('nombre_veterinaria')
             user.profile.telefono_veterinaria = form.cleaned_data.get('telefono_veterinaria')
@@ -164,7 +166,7 @@ def search(request):
             to_email = id.mascota.propietario.email
             message = "\nNombre: " + name +"\nTelefono: " + tel + "\nEmail: " + from_email + "\nMensaje: " + request.GET['mensaje']
             try:
-                send_mail(subject, message, from_email, [to_email])
+                send_mail(subject, message, from_email, [to_email], ['gerenciacomercial@archivopet.com'])
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')
         return render(request, 'archivopetsite/busqueda_resultados.html',
@@ -183,7 +185,7 @@ def emailView(request):
             from_email = form.cleaned_data['from_email']
             message = form.cleaned_data['message']
             try:
-                send_mail(subject, message, from_email, ['archivopet@gmail.com'])
+                send_mail(subject, message, from_email, ['gerenciacomercial@archivopet.com'])
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')
             return redirect('success')

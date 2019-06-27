@@ -60,6 +60,8 @@ class SignUpForm(UserCreationForm):
     dni = forms.CharField(max_length=30, help_text='Requerido.', label='DNI')
     #es_veterinario = models.BooleanField('estado veterinario', default=False, null=True)
     tiene_lectora = forms.BooleanField(label='Tilde si dispone de lectora de microchip', required=False   )
+    c =[("VT", "Veterinaria"), ("MU", "Municipalidad"), ("CR", "Criadero"), ("OT", "Otro")]
+    establecimiento_tipo = forms.ChoiceField(choices=c, label='Tipo de Establecimiento')
     calle_veterinaria = forms.CharField(max_length=30, help_text='Requerido.')
     numero_calle_veterinaria = forms.IntegerField(help_text='Requerido.')
     localidad_veterinaria = forms.CharField(max_length=30, help_text='Requerido.')
@@ -82,6 +84,7 @@ class SignUpForm(UserCreationForm):
         'last_name',
         'dni',
         'tiene_lectora',
+        'establecimiento_tipo',
         'calle_veterinaria',
         'numero_calle_veterinaria',
         'localidad_veterinaria',
@@ -107,6 +110,7 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         fields = ('dni',
         'tiene_lectora',
+        'establecimiento_tipo',
         'calle_veterinaria',
         'numero_calle_veterinaria',
         'localidad_veterinaria',

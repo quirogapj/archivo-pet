@@ -13,11 +13,13 @@
             <h5>Se encontró y pertenece a:</h5>
             <ul>
                 {% for identificacion in identificacion %}
+                <li><strong>Nombre del Propietario:</strong> {{ identificacion.mascota.propietario.nombre }}</li>
                 <li><strong>Nombre de la mascota:</strong> {{ identificacion.mascota }}</li>
                 <li><strong>Email propietario:</strong> {{ identificacion.mascota.propietario.email }}</li>
                 <li><strong>Teléfono propietario:</strong> {{ identificacion.mascota.propietario.telefono }}</li>
                 {% endfor %}
             </ul>
+            <p>En breve el propietario de la mascota lo estará contactando.</p>
         {% else %}
             <p>Ninguna mascota registrada con esa identificación. Por favor, <a href="/buscar_mascota">vuelva a intentarlo.</a></p>
         {% endif %}

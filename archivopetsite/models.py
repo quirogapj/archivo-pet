@@ -16,6 +16,20 @@ class Profile(models.Model):
     es_veterinario = models.BooleanField('estado veterinario', default=False, null=True)
     tiene_lectora = models.BooleanField('tiene lectora', default=False, null=True)
     #matricula = models.CharField(max_length=30)
+    MUNICIPALIDAD = "MU"
+    CRIADERO = "CR"
+    VETERINARIA = "VT"
+    OTRO = "OT"
+    ESTABLECIMIENTO_TIPO_OPCIONES = (
+        (MUNICIPALIDAD, 'Municipalidad'),
+        (CRIADERO, 'Criadero'),
+        (VETERINARIA, 'Veterinaria'),
+        (OTRO, 'Otro'),
+    )
+    establecimiento_tipo = models.CharField('Tipo Establecimiento',
+        max_length=2,
+        choices=ESTABLECIMIENTO_TIPO_OPCIONES,
+    )
     calle_veterinaria = models.CharField(max_length=30, null=True)
     numero_calle_veterinaria = models.PositiveIntegerField(null=True)
     localidad_veterinaria = models.CharField(max_length=30, null=True)
@@ -68,7 +82,7 @@ class Mascota(models.Model):
     #identificaciones = models.ForeignKey(Identificacion, on_delete=models.CASCADE, blank=True, null=True)
     veterinario = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     propietario = models.ForeignKey(Propietario, on_delete=models.CASCADE)
-    mascota_nombre = models.CharField('nombre', max_length=20)
+    mascota_nombre = models.CharField('nombre', max_length=20, help_text="Ingrese APELLIDO y NOMBRE")
     mascota_tipo = models.ForeignKey('Tipo_Mascota', on_delete=models.CASCADE, verbose_name="Especie")
     mascota_raza = models.ForeignKey('Raza', on_delete=models.CASCADE, verbose_name="Raza")
     MACHO = "M"
