@@ -166,7 +166,7 @@ def search(request):
             to_email = id.mascota.propietario.email
             message = "\nNombre: " + name +"\nTelefono: " + tel + "\nEmail: " + from_email + "\nMensaje: " + request.GET['mensaje']
             try:
-                send_mail(subject, message, from_email, [to_email], ['gerenciacomercial@archivopet.com'])
+                send_mail(subject, message, from_email, [to_email, 'gerenciacomercial@archivopet.com'])
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')
         return render(request, 'archivopetsite/busqueda_resultados.html',

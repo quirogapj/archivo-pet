@@ -19,6 +19,7 @@ from django.conf.urls import include
 from django.conf.urls import url, re_path
 
 from archivopetsite import views as core_views
+from django.contrib.auth import views as auth_views
 
 
 
@@ -32,4 +33,6 @@ urlpatterns += [
     #url(r'^$', core_views.home, name='home'),
     url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^signup/$', core_views.signup, name='signup'),
+    url('^', include('django.contrib.auth.urls')),
+
 ]

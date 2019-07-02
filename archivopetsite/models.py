@@ -30,7 +30,7 @@ class Profile(models.Model):
         max_length=2,
         choices=ESTABLECIMIENTO_TIPO_OPCIONES,
     )
-    calle_veterinaria = models.CharField(max_length=30, null=True)
+    calle_veterinaria = models.CharField('Calle', max_length=30, null=True)
     numero_calle_veterinaria = models.PositiveIntegerField(null=True)
     localidad_veterinaria = models.CharField(max_length=30, null=True)
     cp_veterinaria = models.PositiveIntegerField(null=True)

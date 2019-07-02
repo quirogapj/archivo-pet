@@ -79,11 +79,14 @@
             <a class="nav-link" href="/modificarperfil">Usuario: {{ user.get_username }} <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
+            <a class="nav-link {% if url_name == 'modificarperfil' %} active {% endif %}" href="/modificarperfil">Modificar Perfil</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="{% url 'logout'%}?next={{request.path}}">Logout</a>
           </li>
           {% else %}
           <li class="nav-item {% if url_name == 'signup' %} active {% endif %}">
-            <a class="nav-link" href="/signup">Registro</a>
+            <a class="nav-link" href="/signup">Registrarse</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'login'%}?next={{request.path}}">Login</a>
