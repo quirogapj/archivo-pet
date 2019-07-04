@@ -160,13 +160,20 @@ def search(request):
         if identificacion:
             id = Identificacion.objects.get(identificacion_codigo__icontains=q)
             name = request.GET['nombre']
+            name2 = id.mascota.propietario.nombre
             subject = "Archivo PET - Reporte de mascota ENCONTRADA"
+            subject2 = "Archivo PET - Datos del propietario de la mascota"
             tel = request.GET['telefono']
+            tel2 = id.mascota.propietario.telefono
             from_email = request.GET['email']
+            from_email2 = 'no-responder@archivopet.com'
             to_email = id.mascota.propietario.email
+            to_email2 = request.GET['email']
             message = "\nNombre: " + name +"\nTelefono: " + tel + "\nEmail: " + from_email + "\nMensaje: " + request.GET['mensaje']
+            message2 = "\nNombre: " + name2 +"\nTelefono: " + tel2 + "\nEmail: " + to_email
             try:
                 send_mail(subject, message, from_email, [to_email, 'gerenciacomercial@archivopet.com'])
+                send_mail(subject2, message2, from_email2, [to_email2, 'gerenciacomercial@archivopet.com', 'quirogapj@gmail.com'])
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')
         return render(request, 'archivopetsite/busqueda_resultados.html',
