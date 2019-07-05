@@ -213,10 +213,10 @@ def update_profile(request):
             request.user.is_superuser = False
             user_form.save()
             profile_form.save()
-            messages.success(request, ('Your profile was successfully updated!'))
+            messages.success(request, ('Su perfil fue actualizado exitosamente!'))
             return redirect('/modificarperfil')
         else:
-            messages.error(request, ('Please correct the error below.'))
+            messages.error(request, ('Por favor corrija los errores.'))
     else:
         user_form = UserForm(instance=request.user)
         profile_form = ProfileForm(instance=request.user.profile)
