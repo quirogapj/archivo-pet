@@ -67,7 +67,7 @@ class SignUpForm(UserCreationForm):
     localidad_veterinaria = forms.CharField(max_length=30, help_text='Requerido.', label='Localidad')
     cp_veterinaria = forms.IntegerField(label='Código Postal:',help_text='Requerido.')
     provincia_veterinaria = forms.CharField(max_length=30, help_text='Requerido.', label='Provincia')
-    nombre_veterinaria = forms.CharField(max_length=30, help_text='Requerido.', label='Nombre')
+    nombre_veterinaria = forms.CharField(max_length=30, help_text='Requerido.', label='Nombre establecimiento')
     telefono_veterinaria = forms.CharField(max_length=15, help_text='Requerido.', label='Teléfono')
     telefono_celular = forms.CharField(max_length=15, required=False, help_text='Opcional.', label='Celular')
     email = forms.EmailField(max_length=254, help_text='Requerido. Ingrese una dirección válida.', label='Email')
