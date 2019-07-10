@@ -4,7 +4,7 @@
     <div class="mascota">
         {% if mascota.fecha_nacimiento_mascota %}
             <div class="date">
-                {{ mascota.fecha_nacimiento_mascota }}
+              Fecha de nacimiento: {{ mascota.fecha_nacimiento_mascota }}
             </div>
         {% endif %}
         <div><h2>{{ mascota.mascota_nombre }} {% if user.is_authenticated %}

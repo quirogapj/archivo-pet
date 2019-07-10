@@ -1,0 +1,18 @@
+{% extends 'archivopetsite/base_content.html' %}
+
+{% block content %}
+
+    {% for mascota in mascotas %}
+        <div class="mascota">
+            <div class="date">
+                Fecha de nacimiento: {{ mascota.fecha_nacimiento_mascota }}
+            </div>
+            <h3>Nombre: {{ mascota.mascota_nombre }} <a class="btn btn-outline-secondary btn-sm" href="{% url 'mascota_detail' pk=mascota.pk %}">Ver</a></h3>
+            <p><strong>Especie:</strong> {{ mascota.mascota_tipo|linebreaksbr }}</p>
+            <p><strong>Raza:</strong> {{ mascota.mascota_raza|linebreaksbr }}</p>
+            <p><strong>Sexo:</strong> {{ mascota.get_mascota_sexo_display|linebreaksbr }}</p>
+        </div>
+    {% empty %}
+    <h3>Disculpa, no hay mascotas en esta lista.</h3>
+    {% endfor %}
+{% endblock %}

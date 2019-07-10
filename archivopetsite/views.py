@@ -72,7 +72,7 @@ def signup(request):
 
 @login_required
 def mascota_list(request):
-    mascotas = Mascota.objects.filter(veterinario=request.user).order_by('fecha_nacimiento_mascota')
+    mascotas = Mascota.objects.filter(veterinario=request.user).order_by('mascota_nombre')
     return render(request, 'archivopetsite/mascota_list.html', {'mascotas': mascotas})
 
 @login_required
