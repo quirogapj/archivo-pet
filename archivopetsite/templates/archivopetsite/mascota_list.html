@@ -2,11 +2,28 @@
 
 {% block content %}
 
-    {% for mascota in mascotas %}
-        <div class="mascota">
-            <h3>Nombre: {{ mascota.mascota_nombre }} <a class="btn btn-outline-secondary btn-sm" href="{% url 'mascota_detail' pk=mascota.pk %}">Ver</a></h3>          
-        </div>
+
+
+
+
+    <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Nombre</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+      {% for mascota in mascotas %}
+    <tr>
+      <td>{{ mascota.mascota_nombre }}</td>
+      <td><a href="{% url 'mascota_detail' pk=mascota.pk %}" class="badge badge-secondary">Ver</a></td>
+    </tr>
     {% empty %}
     <h3>Disculpa, no hay mascotas en esta lista.</h3>
     {% endfor %}
+  </tbody>
+</table>
+
+
 {% endblock %}
