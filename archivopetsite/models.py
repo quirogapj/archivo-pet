@@ -19,11 +19,15 @@ class Profile(models.Model):
     MUNICIPALIDAD = "MU"
     CRIADERO = "CR"
     VETERINARIA = "VT"
+    PROTECTORA = "PR"
+    REFUGIO = "RF"
     OTRO = "OT"
     ESTABLECIMIENTO_TIPO_OPCIONES = (
         (MUNICIPALIDAD, 'Municipalidad'),
         (CRIADERO, 'Criadero'),
         (VETERINARIA, 'Veterinaria'),
+        (PROTECTORA, 'Protectora'),
+        (REFUGIO, 'Refugio'),
         (OTRO, 'Otro'),
     )
     establecimiento_tipo = models.CharField('Tipo Establecimiento',
